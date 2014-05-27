@@ -1,14 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupProject", "GroupProject.csproj", "{669B25E7-8A20-4247-925C-DEC269DFB4E1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FFDEB5C0-DA2B-4E7A-A580-D79DE9E5AD53}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupProject", "GroupProject\GroupProject.csproj", "{CA6753F1-1B0B-4B91-A00C-DCA9AD9BFFF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +9,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{669B25E7-8A20-4247-925C-DEC269DFB4E1}.Debug|x86.ActiveCfg = Debug|x86
-		{669B25E7-8A20-4247-925C-DEC269DFB4E1}.Debug|x86.Build.0 = Debug|x86
-		{669B25E7-8A20-4247-925C-DEC269DFB4E1}.Release|x86.ActiveCfg = Release|x86
-		{669B25E7-8A20-4247-925C-DEC269DFB4E1}.Release|x86.Build.0 = Release|x86
+		{CA6753F1-1B0B-4B91-A00C-DCA9AD9BFFF5}.Debug|x86.ActiveCfg = Debug|x86
+		{CA6753F1-1B0B-4B91-A00C-DCA9AD9BFFF5}.Debug|x86.Build.0 = Debug|x86
+		{CA6753F1-1B0B-4B91-A00C-DCA9AD9BFFF5}.Release|x86.ActiveCfg = Release|x86
+		{CA6753F1-1B0B-4B91-A00C-DCA9AD9BFFF5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
