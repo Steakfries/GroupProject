@@ -10,7 +10,7 @@ namespace GroupProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Texture2D test;
+        Sprites test = new Sprites(1280, 720);
 
         public Game1()
         {
@@ -29,6 +29,9 @@ namespace GroupProject
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+
         }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace GroupProject
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            test = Content.Load<Texture2D>("Sprites/Peashy");
+            test.tex = Content.Load<Texture2D>("Sprites/demo");
         }
 
         /// <summary>
@@ -76,7 +79,7 @@ namespace GroupProject
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            spriteBatch.Draw(test, new Rectangle(0, 0, 800, 480), Color.White);
+            spriteBatch.Draw(test.tex, new Rectangle(0, 0, test.width, test.height), Color.White);
 
             spriteBatch.End();
 
