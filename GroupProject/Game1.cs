@@ -10,6 +10,7 @@ namespace GroupProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Texture2D test;
 
         public Game1()
         {
@@ -40,6 +41,7 @@ namespace GroupProject
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            test = Content.Load<Texture2D>("Sprites/Peashy");
         }
 
         /// <summary>
@@ -72,6 +74,11 @@ namespace GroupProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(test, new Rectangle(0, 0, 800, 480), Color.White);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
