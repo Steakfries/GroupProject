@@ -72,8 +72,7 @@ namespace GroupProject
 
             base.Update(gameTime);
 
-            player.CheckInput();
-            player.CheckMouse();
+            player.Update();
         }
 
         /// <summary>
@@ -87,11 +86,11 @@ namespace GroupProject
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            spriteBatch.Draw(test.tex, test.Position, Color.White);  // Draw sprite
+            test.Draw(spriteBatch); // Call sprites own draw function
 
-            spriteBatch.Draw(player.tex, player.Position, Color.White);
+            player.Draw(spriteBatch);
 
-            spriteBatch.Draw(wall.tex, wall.Position, Color.White);
+            wall.Draw(spriteBatch);
 
             spriteBatch.End();
 

@@ -40,6 +40,23 @@ namespace GroupProject
             this.height = h;
         }
 
+        #region Update and Draw
+
+        public void Update()    // Update for sprite
+        {
+            CheckInput();
+            CheckMouse();
+        }
+
+        public void Draw(SpriteBatch spriteBatch)  // Draw for sprite
+        {
+            spriteBatch.Draw(this.tex, this.Position, new Rectangle(0,0, width, height), Color.White);  // Draw sprite
+        }
+
+        #endregion
+
+        #region Input
+
         public void CheckInput()    // Check for user input
         {
             KeyboardState newState = Keyboard.GetState();  // Check for keyboard input
@@ -82,5 +99,7 @@ namespace GroupProject
 
             oldMouse = mouseState;  // reassign to stop unwanted mouse press
         }
+
+        #endregion
     }
 }
