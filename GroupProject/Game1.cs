@@ -12,7 +12,8 @@ namespace GroupProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprites test = new Sprites(1280, 720);  // Create new Sprite/Player
-        Sprites player = new Sprites(236, 208);
+        Sprites player = new Sprites(50, 50);
+        Sprites wall = new Sprites(200, 200);
 
         public Game1()
         {
@@ -46,8 +47,9 @@ namespace GroupProject
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            test.tex = Content.Load<Texture2D>("Sprites/demo"); // Load Sprite image
-            player.tex = Content.Load<Texture2D>("Sprites/Peashy");
+            test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
+            wall.tex = Content.Load<Texture2D>("Sprites/SpriteRectangle");
+            player.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
         }
 
         /// <summary>
@@ -88,6 +90,8 @@ namespace GroupProject
             spriteBatch.Draw(test.tex, test.Position, Color.White);  // Draw sprite
 
             spriteBatch.Draw(player.tex, player.Position, Color.White);
+
+            spriteBatch.Draw(wall.tex, wall.Position, Color.White);
 
             spriteBatch.End();
 
