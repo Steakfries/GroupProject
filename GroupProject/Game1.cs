@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GroupProject
 {
@@ -10,7 +11,8 @@ namespace GroupProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Sprites test = new Sprites(1280, 720);
+        Sprites test = new Sprites(1280, 720);  // Create new Sprite/Player
+        Sprites player = new Sprites(236, 208);
 
         public Game1()
         {
@@ -29,8 +31,8 @@ namespace GroupProject
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
+            graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
 
         }
 
@@ -44,7 +46,8 @@ namespace GroupProject
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            test.tex = Content.Load<Texture2D>("Sprites/demo");
+            test.tex = Content.Load<Texture2D>("Sprites/demo"); // Load Sprite image
+            player.tex = Content.Load<Texture2D>("Sprites/Peashy");
         }
 
         /// <summary>
@@ -66,6 +69,9 @@ namespace GroupProject
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+
+            player.CheckInput();
+            player.CheckMouse();
         }
 
         /// <summary>
@@ -79,7 +85,9 @@ namespace GroupProject
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            spriteBatch.Draw(test.tex, new Rectangle(0, 0, test.width, test.height), Color.White);
+            spriteBatch.Draw(test.tex, test.Position, Color.White);  // Draw sprite
+
+            spriteBatch.Draw(player.tex, player.Position, Color.White);
 
             spriteBatch.End();
 
