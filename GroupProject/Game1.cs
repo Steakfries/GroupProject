@@ -11,9 +11,10 @@ namespace GroupProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Sprites test = new Sprites(1280, 720);  // Create new Sprite/Player
-        Sprites player = new Sprites(50, 50);
-        Sprites wall = new Sprites(200, 200);
+        Collision collision = new Collision();
+        Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
+        Sprites player = new Sprites(50, 50, 0.2f);
+        Sprites wall = new Sprites(182, 93, 1f);
 
         public Game1()
         {
@@ -34,6 +35,8 @@ namespace GroupProject
             base.Initialize();
             graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
+
+            wall.Position = new Vector2(400, 400);
 
         }
 
@@ -72,7 +75,13 @@ namespace GroupProject
 
             base.Update(gameTime);
 
+            Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
+            
             player.Update();
+            if (Collision.CheckCollision(player, wall)) // Check collision for player and wall
+            {
+                player.Position = oldPos;
+            }
         }
 
         /// <summary>

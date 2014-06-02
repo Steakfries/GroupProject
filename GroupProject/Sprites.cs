@@ -11,9 +11,14 @@ namespace GroupProject
     class Sprites
     {
         #region Variables
-
+        
         public Texture2D tex;   // Texture
         public Vector2 Position // XY Position
+        {
+            get;
+            set;
+        }
+        public Vector2 velocity
         {
             get;
             set;
@@ -25,6 +30,7 @@ namespace GroupProject
         }
         public int width;
         public int height;
+        public float scale = 0.5f;
 
         private KeyboardState oldState; // To improve input detection
 
@@ -34,10 +40,11 @@ namespace GroupProject
 
         #endregion
 
-        public Sprites(int w, int h)    // Constructor
+        public Sprites(int w, int h, float s)    // Constructor
         {
             this.width = w;
             this.height = h;
+            this.scale = s;
         }
 
         #region Update and Draw
@@ -46,11 +53,19 @@ namespace GroupProject
         {
             CheckInput();
             CheckMouse();
+            UpdatePosition();
+        }
+
+        public void UpdatePosition()
+        {
+            this.Position += this.velocity;
+            this.velocity = Vector2.Zero;
         }
 
         public void Draw(SpriteBatch spriteBatch)  // Draw for sprite
         {
-            spriteBatch.Draw(this.tex, this.Position, new Rectangle(0,0, width, height), Color.White);  // Draw sprite
+            //spriteBatch.Draw(this.tex, this.Position, new Rectangle(0,0, width, height), Color.White);  // Draw sprite
+            spriteBatch.Draw(this.tex, this.Position, null, Color.White, 0f, Vector2.Zero, this.scale, SpriteEffects.None, 0f);
         }
 
         #endregion
@@ -63,22 +78,22 @@ namespace GroupProject
 
             if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.W))
             {
-                this.Position += new Vector2(0.0f, -3.0f);
+                this.velocity += new Vector2(0.0f, -3.0f);
             }
 
             if (newState.IsKeyDown(Keys.Down) || newState.IsKeyDown(Keys.S))
             {
-                this.Position += new Vector2(0.0f, 3.0f);
+                this.velocity += new Vector2(0.0f, 3.0f);
             }
 
             if (newState.IsKeyDown(Keys.Left) || newState.IsKeyDown(Keys.A))
             {
-                this.Position += new Vector2(-3.0f, 0.0f);
+                this.velocity += new Vector2(-3.0f, 0.0f);
             }
 
             if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.D))
             {
-                this.Position += new Vector2(3.0f, 0.0f);
+                this.velocity += new Vector2(3.0f, 0.0f);
             }
 
             oldState = newState;    // reassign to stop unwanted keypress
