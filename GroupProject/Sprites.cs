@@ -11,7 +11,7 @@ namespace GroupProject
     class Sprites
     {
         #region Variables
-        
+
         public Texture2D tex;   // Texture
         public Vector2 Position // XY Position
         {
@@ -30,7 +30,7 @@ namespace GroupProject
         }
         public int width;
         public int height;
-        public float scale = 0.5f;
+        public float scale = 0f;
 
         private KeyboardState oldState; // To improve input detection
 
