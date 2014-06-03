@@ -15,7 +15,7 @@ namespace GroupProject
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
         Sprites player = new Sprites(50, 50, 0.2f);
         Sprites wall = new Sprites(182, 93, 1f);
-        Text score = new Text();
+        Text score = new Text();    // Create Text
 
         public Game1()
         {

@@ -44,9 +44,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="RealmFactoryCore">
-      <HintPath>..\..\RealmFactoryCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GroupProjectContentContent\GroupProjectContentContent.contentproj">

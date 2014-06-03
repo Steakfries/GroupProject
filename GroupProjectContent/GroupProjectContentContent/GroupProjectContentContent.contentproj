@@ -46,9 +46,6 @@
     <Reference Include="MonoGameContentProcessors">
       <HintPath>$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGameContentProcessors.dll</HintPath>
     </Reference>
-    <Reference Include="RealmFactoryContentManager">
-      <HintPath>..\..\RealmFactoryContentManager.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Peashy.png">
