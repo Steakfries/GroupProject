@@ -15,6 +15,7 @@ namespace GroupProject
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
         Sprites player = new Sprites(50, 50, 0.2f);
         Sprites wall = new Sprites(182, 93, 1f);
+        Text score = new Text();
 
         public Game1()
         {
@@ -53,6 +54,7 @@ namespace GroupProject
             test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
             wall.tex = Content.Load<Texture2D>("Sprites/SpriteRectangle");
             player.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
+            score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
         }
 
         /// <summary>
@@ -94,12 +96,14 @@ namespace GroupProject
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
+            
             test.Draw(spriteBatch); // Call sprites own draw function
 
             player.Draw(spriteBatch);
 
             wall.Draw(spriteBatch);
+
+            score.Draw(spriteBatch);
 
             spriteBatch.End();
 
