@@ -16,6 +16,8 @@ namespace GroupProject
         Sprites player = new Sprites(50, 50, 0.2f);
         Sprites wall = new Sprites(182, 93, 1f);
         Text score = new Text();    // Create Text
+        Grid Level = new Grid(10,10);
+        AI_MainFrame AITest;
 
         public Game1()
         {
@@ -47,6 +49,8 @@ namespace GroupProject
         /// </summary>
         protected override void LoadContent()
         {
+            Level.Matrix[0, 0] = true;
+            AITest = new AI_MainFrame(new Vector2(3,3), new Vector2(5,7), new Vector2(150,200), Level);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -55,6 +59,11 @@ namespace GroupProject
             wall.tex = Content.Load<Texture2D>("Sprites/SpriteRectangle");
             player.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
+            AITest.AISprite.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
+            for (int i = 0; i < Level.GridSprites.Length; i++)
+            {
+                Level.GridSprites[i].tex = Content.Load<Texture2D>("Sprites/SpriteSquare");
+            }
         }
 
         /// <summary>
@@ -78,7 +87,8 @@ namespace GroupProject
             base.Update(gameTime);
 
             Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
-            
+            AITest.Patrol();
+            AITest.AISprite.Update();
             player.Update();
             if (Collision.CheckCollision(player, wall)) // Check collision for player and wall
             {
@@ -100,6 +110,8 @@ namespace GroupProject
             test.Draw(spriteBatch); // Call sprites own draw function
 
             player.Draw(spriteBatch);
+
+            AITest.AISprite.Draw(spriteBatch);
 
             wall.Draw(spriteBatch);
 
