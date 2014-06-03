@@ -40,6 +40,10 @@ namespace GroupProject
 
         #endregion
 
+        public Sprites()
+        {
+        }
+
         public Sprites(int w, int h, float s)    // Constructor
         {
             this.width = w;

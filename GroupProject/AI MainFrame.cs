@@ -20,7 +20,7 @@ namespace GroupProject
 
         public AI_MainFrame(Vector2 a_PatrolStart, Vector2 a_PatrolEnd, Vector2 a_Position, Grid a_Grid) // constructor
         {
-            AISprite = new Sprites(50, 50, .2f);
+            AISprite = new Enemy(50, 50, .2f);
             AISprite.Position = a_Position;
 
             MovementNodes = new LinkedList<Vector2>();
@@ -32,7 +32,7 @@ namespace GroupProject
 
         }
 
-        public Sprites AISprite;
+        public Enemy AISprite;
 
         int CurrentNode;
 
