@@ -10,14 +10,6 @@ namespace GroupProject
 {
     class AI_MainFrame
     {
-
-        /*public enum AIStates{ //state enums for ai
-            Patrol,
-            FindPath,
-            ToPatrol,
-            Pursue
-        };*/
-
         public AI_MainFrame(Vector2 a_PatrolStart, Vector2 a_PatrolEnd, Vector2 a_Position, Grid a_Grid) // constructor
         {
             AISprite = new Enemy(50, 50, 1f);

@@ -51,6 +51,16 @@ namespace GroupProject
 
         }
 
+        public Vector2 GetSquare(float a_X, float a_Y)
+        {
+            return new Vector2(a_X / 50, a_Y / 50);
+        }
+
+        public Vector2 GetSquare(int a_X, int a_Y)
+        {
+            return new Vector2((int)(a_X / 50), (int)(a_Y / 50));
+        }
+
         public void LoadGrid()
         {
             Matrix[0, 0] = true;
@@ -63,6 +73,7 @@ namespace GroupProject
             Matrix[0, 7] = true;
             Matrix[0, 8] = true;
             Matrix[0, 9] = true;
+            Matrix[1, 0] = true;
             Matrix[1, 3] = true;
             Matrix[1, 5] = true;
             Matrix[1, 9] = true;
@@ -105,6 +116,7 @@ namespace GroupProject
             Matrix[9, 2] = true;
             Matrix[9, 3] = true;
             Matrix[9, 4] = true;
+            Matrix[9, 5] = true;
             Matrix[9, 6] = true;
             Matrix[9, 7] = true;
             Matrix[9, 8] = true;
