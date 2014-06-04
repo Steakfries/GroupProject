@@ -13,7 +13,7 @@ namespace GroupProject
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
-        Sprites player = new Sprites(50, 50, 1f);
+        Player player = new Player(50, 50, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
         Text score = new Text();    // Create Text
         Grid Level = new Grid(10,10);
