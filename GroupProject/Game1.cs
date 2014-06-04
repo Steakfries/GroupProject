@@ -50,7 +50,7 @@ namespace GroupProject
         protected override void LoadContent()
         {
             Level.Matrix[0, 0] = true;
-            AITest = new AI_MainFrame(new Vector2(3,3), new Vector2(5,7), new Vector2(150,200), Level);
+            AITest = new AI_MainFrame(new Vector2(3,3), new Vector2(5,7), new Vector2(3,4), Level);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
