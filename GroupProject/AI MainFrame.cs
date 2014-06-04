@@ -21,12 +21,14 @@ namespace GroupProject
         public AI_MainFrame(Vector2 a_PatrolStart, Vector2 a_PatrolEnd, Vector2 a_Position, Grid a_Grid) // constructor
         {
             AISprite = new Sprites(50, 50, .2f);
-            AISprite.Position = a_Position;
+            AISprite.Position = a_Position * 50;
 
             MovementNodes = new LinkedList<Vector2>();
 
+            CurrentNode = 1;
+
             MovementNodes.AddFirst(a_PatrolStart * 50);
-            MovementNodes.AddLast(a_Position);
+            MovementNodes.AddLast(AISprite.Position);
 
             PathFinding(a_PatrolEnd, a_Grid);
 
@@ -40,13 +42,11 @@ namespace GroupProject
 
         LinkedList<Vector2> MovementNodes; //the path the AI will folow
 
-        // State Delegate loader
-
         private void PathFinding(Vector2 a_Target, Grid a_Grid) //find path function
         {
             m_CurrentPlace = new Vector2(AISprite.Position.X / 50, AISprite.Position.Y / 50);
 
-            Vector2 PreviousPlace = MovementNodes.ElementAt(0);
+            Vector2 PreviousPlace = MovementNodes.ElementAt(0) / 50;
             Vector2 NextPlace = m_CurrentPlace;
 
             MovementNodes.AddFirst(m_CurrentPlace * 50);
@@ -80,9 +80,13 @@ namespace GroupProject
                         }
 
                     }
+                    else
+                    {
+                        PreviousPlace = DirectionCheck(PreviousPlace, a_Grid, "UP", "RIGHT");
+                    }
                 }
 
-                else
+                else if (Math.Abs(m_CurrentPlace.X - a_Target.X) < Math.Abs(m_CurrentPlace.Y - a_Target.Y))
                 {
                     if (m_CurrentPlace.Y > a_Target.Y && new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y - 1) != PreviousPlace)
                     {
@@ -109,9 +113,17 @@ namespace GroupProject
                         }
 
                     }
+                    else
+                    {
+                    PreviousPlace = DirectionCheck(PreviousPlace, a_Grid, "RIGHT", "UP");
+                    }
+                }
+                else
+                {
+                    PreviousPlace = DirectionCheck(PreviousPlace, a_Grid, "UP", "RIGHT");
                 }
 
-                if (PreviousPlace == m_CurrentPlace)
+                if (PreviousPlace == m_CurrentPlace || m_CurrentPlace == a_Target)
                     break;
             }
 
@@ -148,7 +160,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X - 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && a_PrimeDirection == "LEFT" && LeftTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && a_PrimeDirection == "LEFT" && LeftTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.X -= 1;
@@ -156,7 +168,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X + 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && a_PrimeDirection == "UP" && UpTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && a_PrimeDirection == "UP" && UpTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y -= 1;
@@ -164,7 +176,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y + 1);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && a_PrimeDirection == "DOWN" && DownTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && a_PrimeDirection == "DOWN" && DownTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y += 1;
@@ -183,7 +195,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X - 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && a_SecondDirection == "LEFT" && LeftTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && a_SecondDirection == "LEFT" && LeftTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.X -= 1;
@@ -191,7 +203,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X + 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && a_SecondDirection == "UP" && UpTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && a_SecondDirection == "UP" && UpTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y -= 1;
@@ -199,7 +211,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y + 1);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && a_SecondDirection == "DOWN" && DownTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && a_SecondDirection == "DOWN" && DownTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y += 1;
@@ -218,7 +230,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X - 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && LeftTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)LeftTile.X, (int)LeftTile.Y] == false && LeftTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.X -= 1;
@@ -226,7 +238,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X + 1, m_CurrentPlace.Y);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && UpTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)UpTile.X, (int)UpTile.Y] == false && UpTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y -= 1;
@@ -234,7 +246,7 @@ namespace GroupProject
                ReturnTile = new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y + 1);
                return ReturnTile;
            }
-           else if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && DownTile != a_PreviousPlace)
+           if (a_Grid.Matrix[(int)DownTile.X, (int)DownTile.Y] == false && DownTile != a_PreviousPlace)
            {
 
                m_CurrentPlace.Y += 1;
