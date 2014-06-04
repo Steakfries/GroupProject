@@ -13,8 +13,8 @@ namespace GroupProject
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
-        Sprites player = new Sprites(50, 50, 0.2f);
-        Sprites wall = new Sprites(182, 93, 1f);
+        Sprites player = new Sprites(50, 50, 1f);
+        Sprites wall = new Sprites(50, 50, 1f);
         Text score = new Text();    // Create Text
         Grid Level = new Grid(10,10);
         AI_MainFrame AITest;
@@ -56,13 +56,13 @@ namespace GroupProject
 
             // TODO: use this.Content to load your game content here
             test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
-            wall.tex = Content.Load<Texture2D>("Sprites/SpriteRectangle");
-            player.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
+            wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
+            player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
-            AITest.AISprite.tex = Content.Load<Texture2D>("Sprites/SpriteCircle");
+            AITest.AISprite.tex = Content.Load<Texture2D>("Sprites/Rcircle");
             for (int i = 0; i < Level.GridSprites.Length; i++)
             {
-                Level.GridSprites[i].tex = Content.Load<Texture2D>("Sprites/SpriteSquare");
+                Level.GridSprites[i].tex = Content.Load<Texture2D>("Sprites/Wsquare");
             }
         }
 
