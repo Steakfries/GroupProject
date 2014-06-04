@@ -64,6 +64,7 @@ namespace GroupProject
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
+            player.bullet.tex = Content.Load<Texture2D>("Sprites/Gbullet");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
             for (int j = 0; j < 3; j++)
             {
@@ -130,6 +131,11 @@ namespace GroupProject
             test.Draw(spriteBatch); // Call sprites own draw function
 
             player.Draw(spriteBatch);
+
+            if (player.isShot)
+            {
+                player.bullet.Draw(spriteBatch);
+            }
 
             for (int j = 0; j < 3; j++)
             {

@@ -20,6 +20,10 @@ namespace GroupProject
         public int MouseX;
         public int MouseY;
 
+        public Sprites bullet = new Sprites(10, 10, 1f);
+        public float bulletSpeed = 0.1f;
+        public bool isShot = false;
+
         #endregion
 
         public Player(int w, int h, float s)
@@ -31,16 +35,18 @@ namespace GroupProject
 
         #region Draw and Update
 
+        
         new void UpdatePosition()
         {
             this.Position += this.velocity;
         }
 
-        public new void Update(Grid a_Grid)
+        public void Update(Grid a_Grid)
         {
             CheckInput(a_Grid);
             CheckMouse();
             this.UpdatePosition();
+            this.bullet.Update();
             if (isDead)
             {
                 Console.Write("Dead \n");
@@ -99,7 +105,7 @@ namespace GroupProject
 
             if (mouseState.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
             {
-                Console.Write("Hello " + MouseX + " " + MouseY + " " + "\n");
+                shoot();
             }
 
             oldMouse = mouseState;  // reassign to stop unwanted mouse press
@@ -129,5 +135,16 @@ namespace GroupProject
         }
 
         #endregion
+
+        public void shoot()
+        {
+            isShot = true;
+
+            bullet.Position = this.Position;
+
+            bullet.Position = Vector2.Lerp(this.Position, new Vector2(MouseX, MouseY), bulletSpeed);
+
+            bulletSpeed += bulletSpeed;
+        }
     }
 }
