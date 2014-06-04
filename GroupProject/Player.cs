@@ -17,6 +17,9 @@ namespace GroupProject
 
         private MouseState oldMouse;    // To improve mouse detection
 
+        public int MouseX;
+        public int MouseY;
+
         #endregion
 
         public Player(int w, int h, float s)
@@ -33,6 +36,11 @@ namespace GroupProject
             CheckInput();
             CheckMouse();
             this.UpdatePosition();
+            if (isDead)
+            {
+                Console.Write("Dead \n");
+                isDead = false;
+            }
         }
 
         #endregion

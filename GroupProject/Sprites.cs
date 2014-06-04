@@ -32,11 +32,6 @@ namespace GroupProject
         public int height;
         public float scale = 0f;
 
-        private KeyboardState oldState; // To improve input detection
-
-        private MouseState oldMouse;    // To improve mouse detection
-        public int MouseX;
-        public int MouseY;
 
         #endregion
 

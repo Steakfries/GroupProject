@@ -15,6 +15,7 @@ namespace GroupProject
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
         Player player = new Player(50, 50, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
+        Sprites cursor = new Sprites(20, 20, 1f);
         Text score = new Text();    // Create Text
         Grid Level = new Grid(10,10);
         AI_MainFrame[] AITest;
@@ -38,7 +39,6 @@ namespace GroupProject
             base.Initialize();
             graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
-
             wall.Position = new Vector2(400, 400);
 
         }
@@ -61,6 +61,7 @@ namespace GroupProject
             // TODO: use this.Content to load your game content here
             test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
+            cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
             for (int j = 0; j < 3; j++)
@@ -101,9 +102,16 @@ namespace GroupProject
             }
             
             player.Update();
+            cursor.Position = new Vector2(player.MouseX, player.MouseY);
+
             if (Collision.CheckCollision(player, wall)) // Check collision for player and wall
             {
                 player.Position = oldPos;
+            }
+            if (Collision.CheckCollision(player, AITest.AISprite)) // Check collision for player and wall
+            {
+                player.isDead = true;
+                
             }
         }
 
@@ -133,6 +141,8 @@ namespace GroupProject
             {
                 Level.GridSprites[i].Draw(spriteBatch);
             }
+
+            cursor.Draw(spriteBatch);
 
             score.Draw(spriteBatch);
 
