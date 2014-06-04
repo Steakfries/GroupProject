@@ -49,9 +49,9 @@ namespace GroupProject
             Vector2 PreviousPlace = MovementNodes.ElementAt(0) / 50;
             Vector2 NextPlace = m_CurrentPlace;
 
-            MovementNodes.AddFirst(m_CurrentPlace * 50);
+            //MovementNodes.AddFirst(m_CurrentPlace * 50);
 
-            while (m_CurrentPlace != a_Target)
+            for (int i = 0; i < a_Grid.Matrix.Length; i++)
             {
                 if (Math.Abs(m_CurrentPlace.X - a_Target.X) > Math.Abs(m_CurrentPlace.Y - a_Target.Y))
                 {
@@ -86,7 +86,7 @@ namespace GroupProject
                     }
                 }
 
-                else if (Math.Abs(m_CurrentPlace.X - a_Target.X) < Math.Abs(m_CurrentPlace.Y - a_Target.Y))
+                else
                 {
                     if (m_CurrentPlace.Y > a_Target.Y && new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y - 1) != PreviousPlace)
                     {
@@ -101,7 +101,7 @@ namespace GroupProject
 
                     }
 
-                    else if (m_CurrentPlace.Y < a_Target.Y && new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y + 1) != PreviousPlace)
+                    else
                     {
                         if (m_CurrentPlace.X > a_Target.X && new Vector2(m_CurrentPlace.X + 1, m_CurrentPlace.Y) != PreviousPlace)
                         {
@@ -113,14 +113,6 @@ namespace GroupProject
                         }
 
                     }
-                    else
-                    {
-                    PreviousPlace = DirectionCheck(PreviousPlace, a_Grid, "RIGHT", "UP");
-                    }
-                }
-                else
-                {
-                    PreviousPlace = DirectionCheck(PreviousPlace, a_Grid, "UP", "RIGHT");
                 }
 
                 if (PreviousPlace == m_CurrentPlace || m_CurrentPlace == a_Target)
@@ -129,14 +121,38 @@ namespace GroupProject
 
         }
 
-        public void Patrol() // follows the movement nodes from one end to another, 
+        public void Patrol() // follows the movement nodes from one end to another, using a seek function
         {
-            
-            Seek();
+            //basic seek
+            if (AISprite.Position != MovementNodes.ElementAt(CurrentNode))
+            {
+                if (MovementNodes.ElementAt(CurrentNode).X < AISprite.Position.X)
+                {
+                    AISprite.velocity = new Vector2(-1, 0);
+                }
+                if (MovementNodes.ElementAt(CurrentNode).X > AISprite.Position.X)
+                {
+                    AISprite.velocity = new Vector2(1, 0);
+                }
+                if (MovementNodes.ElementAt(CurrentNode).Y < AISprite.Position.Y)
+                {
+                    AISprite.velocity = new Vector2(0, -1);
+                }
+                if (MovementNodes.ElementAt(CurrentNode).Y > AISprite.Position.Y)
+                {
+                    AISprite.velocity = new Vector2(0, 1);
+                }
+            }
+
+            //once at node, go to the next one
+            if (AISprite.Position == MovementNodes.ElementAt(CurrentNode))
+            {
+                CurrentNode++;
+            }
+            //once at last node, go to first
             if (AISprite.Position == MovementNodes.Last())
             {
-                //MovementNodes.Reverse();
-                CurrentNode = 1;
+                CurrentNode = 0;
             }
         }
 
@@ -186,7 +202,7 @@ namespace GroupProject
            }
 
 
-
+            //if prime is unclear, check secondary
            if (a_Grid.Matrix[(int)RightTile.X, (int)RightTile.Y] == false && a_SecondDirection == "RIGHT" && RightTile != a_PreviousPlace)
            {
 
@@ -221,7 +237,7 @@ namespace GroupProject
            }
 
 
-
+            //At this point just find a place to go
            if (a_Grid.Matrix[(int)RightTile.X, (int)RightTile.Y] == false && RightTile != a_PreviousPlace)
            {
 
@@ -255,37 +271,10 @@ namespace GroupProject
                return ReturnTile;
            }
 
+            //if all else fails, tell it it's stuck
            ReturnTile = new Vector2(m_CurrentPlace.X, m_CurrentPlace.Y);
            return ReturnTile;
 
-        }
-
-        private void Seek()//a basic seek function
-        {
-            
-            if (AISprite.Position != MovementNodes.ElementAt(CurrentNode))
-            {
-                if (MovementNodes.ElementAt(CurrentNode).X < AISprite.Position.X)
-                {
-                    AISprite.velocity = new Vector2(-1, 0);
-                }
-                if (MovementNodes.ElementAt(CurrentNode).X > AISprite.Position.X)
-                {
-                    AISprite.velocity = new Vector2(1, 0);
-                }
-                if (MovementNodes.ElementAt(CurrentNode).Y < AISprite.Position.Y)
-                {
-                    AISprite.velocity = new Vector2(0, -1);
-                }
-                if (MovementNodes.ElementAt(CurrentNode).Y > AISprite.Position.Y)
-                {
-                    AISprite.velocity = new Vector2(0, 1);
-                }
-            }
-            if(AISprite.Position == MovementNodes.ElementAt(CurrentNode))
-            {
-                CurrentNode++;
-            }
         }
 
     }
