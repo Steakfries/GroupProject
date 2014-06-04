@@ -13,7 +13,7 @@ namespace GroupProject
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
-        Player player = new Player(50, 50, 1f);
+        Player player = new Player(45, 45, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
         Sprites cursor = new Sprites(20, 20, 1f);
         Text score = new Text();    // Create Text
@@ -40,6 +40,7 @@ namespace GroupProject
             graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
             wall.Position = new Vector2(400, 400);
+            player.Position = new Vector2(50, 0);
 
         }
 
@@ -97,21 +98,21 @@ namespace GroupProject
             Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
             for (int j = 0; j < 3; j++)
             {
-               AITest[j].Patrol();
-               AITest[j].AISprite.Update();
+                AITest[j].Patrol();
+                AITest[j].AISprite.Update();
+                if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
+                {
+                    player.isDead = true;
+                }
             }
-            
             player.Update();
             cursor.Position = new Vector2(player.MouseX, player.MouseY);
-
-            if (Collision.CheckCollision(player, wall)) // Check collision for player and wall
+            for (int i = 0; i < Level.GridSprites.Length; i++)
             {
-                player.Position = oldPos;
-            }
-            if (Collision.CheckCollision(player, AITest.AISprite)) // Check collision for player and wall
-            {
-                player.isDead = true;
-                
+                if (Collision.CheckCollision(player, Level.GridSprites[i])) // Check collision for player and wall
+                {
+                    player.Position = oldPos;
+                }
             }
         }
 
