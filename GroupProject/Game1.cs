@@ -116,14 +116,24 @@ namespace GroupProject
             base.Update(gameTime);
 
             Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 3; i++)
             {
-                AITest[j].Patrol();
-                AITest[j].AISprite.Update();
-                if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
-                { 
-                    GameRunning = false;
-                    GameLose = true;
+                for (int j = 0; j < 3; j++)
+                {
+                    AITest[j].Patrol();
+                    AITest[j].AISprite.Update();
+                    if (AITest[j].AISprite.isDead == false)
+                    {
+                        if (Collision.CheckCollision(player.bullet, AITest[j].AISprite)) // Check collision for player and wall
+                        {
+                            AITest[j].AISprite.isDead = true;
+                        }
+                        if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
+                        {
+                            GameRunning = false;
+                            GameLose = true;
+                        }
+                    }
                 }
             }
 
@@ -184,7 +194,10 @@ namespace GroupProject
 
                 for (int j = 0; j < 3; j++)
                 {
-                    AITest[j].AISprite.Draw(spriteBatch);
+                    if (AITest[j].AISprite.isDead == false)
+                    {
+                        AITest[j].AISprite.Draw(spriteBatch);
+                    }
                 }
 
                 //wall.Draw(spriteBatch);
@@ -227,6 +240,10 @@ namespace GroupProject
                     GameLose = false;
                     Exit();
                 }
+                for (int i = 0; i < 3; i++)
+                {
+                    AITest[i].AISprite.isDead = false;
+                }
             }
             if (GameLose)
             {
@@ -244,6 +261,10 @@ namespace GroupProject
                 {
                     GameLose = false;
                     Exit();
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    AITest[i].AISprite.isDead = false;
                 }
             }
             spriteBatch.End();

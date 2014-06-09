@@ -9,7 +9,7 @@ namespace GroupProject
     {
         #region Variables
 
-
+        public bool isDead;
 
         #endregion
 
