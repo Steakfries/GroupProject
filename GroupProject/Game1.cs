@@ -229,13 +229,13 @@ namespace GroupProject
                 player.Position = new Vector2(50, 50);
                 Intelligence.IsCaptured = false;
                 score.score = 0;
-                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.Y))
+                if (newState.IsKeyDown(Keys.Y))
                 {
                     GameWin = false;
                     GameRunning = true;
                 }
 
-                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.N))
+                if (newState.IsKeyDown(Keys.N))
                 {
                     GameLose = false;
                     Exit();
