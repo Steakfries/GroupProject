@@ -13,17 +13,21 @@ namespace GroupProject
     /// </summary>
     public class Game1 : Game
     {
+        bool GameRunning = true;
+        bool GameLose;
+        bool GameWin;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
-        Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
         Player player = new Player(50, 50, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
-        Sprites cursor = new Sprites(20, 20, 1f);
+        Sprites win = new Sprites(1280, 720, 1f);
+        Sprites lose = new Sprites(1280, 720, 1f);
+        Sprites cursor = new Sprites(11, 19, 1f);
         Text score = new Text();    // Create Text
         Grid Level = new Grid(10,10);
         AI_MainFrame[] AITest;
-        Intel Intelligence = new Intel(50, 50, 1f);
+        Intel Intelligence = new Intel(1, 1, 1f);
 
         public Game1()
         {
@@ -68,9 +72,9 @@ namespace GroupProject
 
             // TODO: use this.Content to load your game content here
 
-            Intelligence.tex = Content.Load<Texture2D>("Sprites/Wsquare");
-
-            test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
+            Intelligence.tex = Content.Load<Texture2D>("Sprites/Intel");
+            win.tex = Content.Load<Texture2D>("Sprites/win");
+            lose.tex = Content.Load<Texture2D>("Sprites/lose");
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
@@ -111,10 +115,11 @@ namespace GroupProject
             {
                 AITest[j].Patrol();
                 AITest[j].AISprite.Update();
-                //if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
-               // {
-                    //player.isDead = true;
-                //}
+                if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
+                { 
+                    GameRunning = false;
+                    GameLose = true;
+                }
             }
 
             player.Update(Level);
@@ -131,8 +136,11 @@ namespace GroupProject
             {
                 if (Collision.CheckCollision(player, Intelligence))
                  {
-                     Intelligence.IsCaptured = true;
-                    Console.Write("Win! \n");
+                    
+                    Intelligence.IsCaptured = true;                 
+                    score.score++;
+                    GameRunning = false;
+                    GameWin = true;
                  }
             }
         }
@@ -143,41 +151,81 @@ namespace GroupProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            GraphicsDevice.Clear(Color.Black);
+            KeyboardState newState = Keyboard.GetState();  // Check for keyboard input
             spriteBatch.Begin();
-
-            Intelligence.Draw(spriteBatch);
-            
-            test.Draw(spriteBatch); // Call sprites own draw function
-
-            player.Draw(spriteBatch);
-
-            if (player.isShot)
+            if (GameRunning)
             {
-                player.bullet.Draw(spriteBatch);
-            }
+                // TODO: Add your drawing code here
+                
+                player.Draw(spriteBatch);
 
-            for (int j = 0; j < 3; j++)
+                if (player.isShot)
+                {
+                    player.bullet.Draw(spriteBatch);
+                }
+
+                for (int j = 0; j < 3; j++)
+                {
+                    AITest[j].AISprite.Draw(spriteBatch);
+                }
+
+                //wall.Draw(spriteBatch);
+
+                for (int i = 0; i < Level.GridSprites.Length; i++)
+                {
+                    Level.GridSprites[i].Draw(spriteBatch);
+                }
+
+                if (Intelligence.IsCaptured == false)
+                {
+
+                    Intelligence.Draw(spriteBatch);
+                }
+
+                cursor.Draw(spriteBatch);
+
+                score.Draw(spriteBatch);
+
+                base.Draw(gameTime);
+            }
+            if (GameWin)
             {
-                AITest[j].AISprite.Draw(spriteBatch);
+                win.Draw(spriteBatch);
+                player.Position = new Vector2(50, 50);
+                Intelligence.IsCaptured = false;
+                score.score = 0;
+                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.Y))
+                {
+                    GameWin = false;
+                    GameRunning = true;
+                }
+
+                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.N))
+                {
+                    GameLose = false;
+                    Exit();
+                }
             }
-
-            //wall.Draw(spriteBatch);
-
-            for (int i = 0; i < Level.GridSprites.Length; i++)
+            if (GameLose)
             {
-                Level.GridSprites[i].Draw(spriteBatch);
+                lose.Draw(spriteBatch);
+                player.Position = new Vector2(50, 50);
+                Intelligence.IsCaptured = false;
+                score.score = 0;
+                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.Y))
+                {
+                    GameLose = false;
+                    GameRunning = true;
+                }
+
+                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.N))
+                {
+                    GameLose = false;
+                    Exit();
+                }
             }
-
-            cursor.Draw(spriteBatch);
-
-            score.Draw(spriteBatch);
-
             spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }

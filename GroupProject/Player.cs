@@ -47,11 +47,6 @@ namespace GroupProject
             CheckMouse();
             this.UpdatePosition();
             this.bullet.Update();
-            if (isDead)
-            {
-                Console.Write("Dead \n");
-                isDead = false;
-            }
         }
 
         #endregion
