@@ -18,6 +18,7 @@ namespace GroupProject
             this.width = w;
             this.height = h;
             this.scale = s;
+            IsCaptured = false;
         }
 
         #region Draw and Update

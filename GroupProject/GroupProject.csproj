@@ -65,6 +65,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="Intel.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

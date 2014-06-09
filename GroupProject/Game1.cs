@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +23,7 @@ namespace GroupProject
         Text score = new Text();    // Create Text
         Grid Level = new Grid(10,10);
         AI_MainFrame[] AITest;
+        Intel Intelligence = new Intel(50, 50, 1f);
 
         public Game1()
         {
@@ -41,6 +46,7 @@ namespace GroupProject
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
             wall.Position = new Vector2(400, 400);
             player.Position = new Vector2(50, 50);
+            Intelligence.Position = new Vector2(50, 300);
 
         }
 
@@ -56,10 +62,14 @@ namespace GroupProject
             AITest[0] = new AI_MainFrame(new Vector2(8,4), new Vector2(8,8), new Vector2(8,3), Level);
             AITest[1] = new AI_MainFrame(new Vector2(1,4), new Vector2(5,4), new Vector2(2,4), Level);
             AITest[2] = new AI_MainFrame(new Vector2(4, 6), new Vector2(4, 8), new Vector2(4, 7), Level);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            Intelligence.tex = Content.Load<Texture2D>("Sprites/Wsquare");
+
             test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
@@ -106,6 +116,7 @@ namespace GroupProject
                     //player.isDead = true;
                 //}
             }
+
             player.Update(Level);
             cursor.Position = new Vector2(player.MouseX, player.MouseY);
             for (int i = 0; i < Level.GridSprites.Length; i++)
@@ -114,6 +125,15 @@ namespace GroupProject
                 {
                     player.Position = oldPos;
                 }
+            }
+
+            if (Intelligence.IsCaptured == false)
+            {
+                if (Collision.CheckCollision(player, Intelligence))
+                 {
+                     Intelligence.IsCaptured = true;
+                    Console.Write("Win! \n");
+                 }
             }
         }
 
@@ -127,6 +147,8 @@ namespace GroupProject
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+
+            Intelligence.Draw(spriteBatch);
             
             test.Draw(spriteBatch); // Call sprites own draw function
 

@@ -36,12 +36,12 @@ namespace GroupProject
 
             if (sCol.Intersects(spCol)) // If there is a collision
             {
-                Vector2 newPos = s.Position;
+                //Vector2 newPos = s.Position;
 
 
-                s.velocity = Vector2.Zero;
+                //s.velocity = Vector2.Zero;
 
-                s.Position = newPos;
+                //s.Position = newPos;
 
                 return true;
             }
