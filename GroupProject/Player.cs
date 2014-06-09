@@ -21,7 +21,7 @@ namespace GroupProject
         public int MouseY;
 
         public Sprites bullet = new Sprites(10, 10, 1f);
-        public float bulletSpeed = 0.1f;
+        public float bulletSpeed = 1f;
         public bool isShot = false;
 
         #endregion
@@ -47,6 +47,10 @@ namespace GroupProject
             CheckMouse();
             this.UpdatePosition();
             this.bullet.Update();
+            if (isShot)
+            {
+                ifBulletAlive();
+            }
             if (isDead)
             {
                 Console.Write("Dead \n");
@@ -68,28 +72,51 @@ namespace GroupProject
                 velocity = Vector2.Zero;
             }
 
-            if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.W))
+            if (newState.IsKeyDown(Keys.W))
             {
                 //this.velocity += new Vector2(0.0f, -3.0f);
                 Seek(a_Grid, "UP");
             }
 
-            if (newState.IsKeyDown(Keys.Down) || newState.IsKeyDown(Keys.S))
+            if (newState.IsKeyDown(Keys.S))
             {
                 //this.velocity += new Vector2(0.0f, 3.0f);
                 Seek(a_Grid, "DOWN");
             }
 
-            if (newState.IsKeyDown(Keys.Left) || newState.IsKeyDown(Keys.A))
+            if (newState.IsKeyDown(Keys.A))
             {
                 //this.velocity += new Vector2(-3.0f, 0.0f);
                 Seek(a_Grid, "LEFT");
             }
 
-            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.D))
+            if (newState.IsKeyDown(Keys.D))
             {
                 //this.velocity += new Vector2(3.0f, 0.0f);
                 Seek(a_Grid, "RIGHT");
+            }
+
+            if (isShot == false)
+            {
+                if (newState.IsKeyDown(Keys.Up))
+                {
+                    shoot("UP");
+                }
+
+                if (newState.IsKeyDown(Keys.Down))
+                {
+                    shoot("DOWN");
+                }
+
+                if (newState.IsKeyDown(Keys.Left))
+                {
+                    shoot("LEFT");
+                }
+
+                if (newState.IsKeyDown(Keys.Right))
+                {
+                    shoot("RIGHT");
+                }
             }
 
             oldState = newState;    // reassign to stop unwanted keypress
@@ -102,11 +129,6 @@ namespace GroupProject
 
             MouseX = mouseState.X;  // Get mouse x and y
             MouseY = mouseState.Y;
-
-            if (mouseState.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
-            {
-                shoot();
-            }
 
             oldMouse = mouseState;  // reassign to stop unwanted mouse press
         }
@@ -136,15 +158,31 @@ namespace GroupProject
 
         #endregion
 
-        public void shoot()
+        public void shoot(string key)
         {
+            bullet.Position = new Vector2(this.Position.X + 22, this.Position.Y +25);
             isShot = true;
+            if (key == "RIGHT")
+            {
+                bullet.velocity = new Vector2(2, 0);
+            }
+            if (key == "LEFT")
+            {
+                bullet.velocity = new Vector2(-2, 0);
+            }
+            if (key == "UP")
+            {
+                bullet.velocity = new Vector2(0, -2);
+            }
+            if (key == "DOWN")
+            {
+                bullet.velocity = new Vector2(0, 2);
+            }
+        }
 
-            bullet.Position = this.Position;
-
-            bullet.Position = Vector2.Lerp(this.Position, new Vector2(MouseX, MouseY), bulletSpeed);
-
-            bulletSpeed += bulletSpeed;
+        public void ifBulletAlive()
+        {
+            bullet.Position += bullet.velocity * bulletSpeed;
         }
     }
 }

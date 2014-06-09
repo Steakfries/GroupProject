@@ -13,6 +13,7 @@ namespace GroupProject
         #region Variables
 
         public SpriteFont font;
+        public int score = 0;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace GroupProject
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(this.font, "Intel: 0/0", new Vector2(550, 0), Color.White);
+            spriteBatch.DrawString(this.font, "Intel: " + score + "/1", new Vector2(550, 0), Color.White);
         }
 
         #endregion

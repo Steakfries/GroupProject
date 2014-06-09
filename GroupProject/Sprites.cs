@@ -56,7 +56,7 @@ namespace GroupProject
         public void UpdatePosition()
         {
             this.Position += this.velocity;
-            this.velocity = Vector2.Zero;
+            //this.velocity = Vector2.Zero;
         }
 
         public void Draw(SpriteBatch spriteBatch)  // Draw for sprite

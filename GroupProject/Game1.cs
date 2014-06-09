@@ -16,7 +16,7 @@ namespace GroupProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
-        Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
+        // Create new Sprite/Player
         Player player = new Player(50, 50, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
         Sprites cursor = new Sprites(20, 20, 1f);
@@ -68,9 +68,8 @@ namespace GroupProject
 
             // TODO: use this.Content to load your game content here
 
-            Intelligence.tex = Content.Load<Texture2D>("Sprites/Wsquare");
+            Intelligence.tex = Content.Load<Texture2D>("Sprites/Intel");
 
-            test.tex = Content.Load<Texture2D>("Sprites/back"); // Load Sprite image
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
@@ -125,6 +124,10 @@ namespace GroupProject
                 {
                     player.Position = oldPos;
                 }
+                if (Collision.CheckCollision(player.bullet, Level.GridSprites[i]))
+                {
+                    player.isShot = false;
+                }
             }
 
             if (Intelligence.IsCaptured == false)
@@ -133,8 +136,9 @@ namespace GroupProject
                  {
                      Intelligence.IsCaptured = true;
                     Console.Write("Win! \n");
+                    score.score++;
                  }
-            }
+            } 
         }
 
         /// <summary>
@@ -143,14 +147,12 @@ namespace GroupProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            Intelligence.Draw(spriteBatch);
-            
-            test.Draw(spriteBatch); // Call sprites own draw function
+            // Call sprites own draw function
 
             player.Draw(spriteBatch);
 
@@ -169,6 +171,11 @@ namespace GroupProject
             for (int i = 0; i < Level.GridSprites.Length; i++)
             {
                 Level.GridSprites[i].Draw(spriteBatch);
+            }
+
+            if (Intelligence.IsCaptured == false)
+            {
+                Intelligence.Draw(spriteBatch);
             }
 
             cursor.Draw(spriteBatch);
