@@ -116,6 +116,7 @@ namespace GroupProject
         public void Patrol() // follows the movement nodes from one end to another, using a seek function
         {
             //basic seek
+            AISprite.velocity = Vector2.Zero;
             if (AISprite.Position != MovementNodes.ElementAt(CurrentNode))
             {
                 if (MovementNodes.ElementAt(CurrentNode).X < AISprite.Position.X)
