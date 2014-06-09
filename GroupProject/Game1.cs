@@ -169,15 +169,18 @@ namespace GroupProject
             if (GameRunning)
             {
                 // TODO: Add your drawing code here
-                
-                player.Draw(spriteBatch);
-
 
                 if (player.isShot)
                 {
                     player.bullet.Draw(spriteBatch);
                 }
 
+                if (Intelligence.IsCaptured == false)
+                {
+                    Intelligence.Draw(spriteBatch);
+                }
+
+                player.Draw(spriteBatch);
 
                 for (int j = 0; j < 3; j++)
                 {
@@ -198,10 +201,7 @@ namespace GroupProject
                 }
 
 
-            if (Intelligence.IsCaptured == false)
-            {
-                Intelligence.Draw(spriteBatch);
-            }
+
 
             cursor.Draw(spriteBatch);
 
