@@ -19,6 +19,9 @@ namespace GroupProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
+
+        Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
+
         Player player = new Player(50, 50, 1f);
         Sprites wall = new Sprites(50, 50, 1f);
         Sprites win = new Sprites(1280, 720, 1f);
@@ -72,9 +75,11 @@ namespace GroupProject
 
             // TODO: use this.Content to load your game content here
 
+
             Intelligence.tex = Content.Load<Texture2D>("Sprites/Intel");
             win.tex = Content.Load<Texture2D>("Sprites/win");
             lose.tex = Content.Load<Texture2D>("Sprites/lose");
+
             wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
@@ -130,6 +135,10 @@ namespace GroupProject
                 {
                     player.Position = oldPos;
                 }
+                if (Collision.CheckCollision(player.bullet, Level.GridSprites[i]))
+                {
+                    player.isShot = false;
+                }
             }
 
             if (Intelligence.IsCaptured == false)
@@ -141,8 +150,9 @@ namespace GroupProject
                     score.score++;
                     GameRunning = false;
                     GameWin = true;
+
                  }
-            }
+            } 
         }
 
         /// <summary>
@@ -151,8 +161,10 @@ namespace GroupProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.Black);
             KeyboardState newState = Keyboard.GetState();  // Check for keyboard input
+
             spriteBatch.Begin();
             if (GameRunning)
             {
@@ -160,10 +172,12 @@ namespace GroupProject
                 
                 player.Draw(spriteBatch);
 
+
                 if (player.isShot)
                 {
                     player.bullet.Draw(spriteBatch);
                 }
+
 
                 for (int j = 0; j < 3; j++)
                 {
@@ -183,7 +197,14 @@ namespace GroupProject
                     Intelligence.Draw(spriteBatch);
                 }
 
-                cursor.Draw(spriteBatch);
+
+            if (Intelligence.IsCaptured == false)
+            {
+                Intelligence.Draw(spriteBatch);
+            }
+
+            cursor.Draw(spriteBatch);
+
 
                 score.Draw(spriteBatch);
 
