@@ -48,6 +48,11 @@ namespace GroupProject
             this.UpdatePosition();
             this.bullet.Update();
 
+            if (isShot == false)
+            {
+                bullet.Position = new Vector2(-50, -100);
+            }
+
             if (isShot)
             {
                 ifBulletAlive();

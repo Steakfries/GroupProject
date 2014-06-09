@@ -10,7 +10,7 @@ namespace GroupProject
 {
     class AI_MainFrame
     {
-        public AI_MainFrame(Vector2 a_PatrolStart, Vector2 a_PatrolEnd, Vector2 a_Position, Grid a_Grid) // constructor
+        public AI_MainFrame(Vector2 a_PatrolStart, Vector2 a_Position, Vector2 a_PatrolEnd, Grid a_Grid) // constructor
         {
             AISprite = new Enemy(50, 50, 1f);
             AISprite.Position = a_Position * 50;

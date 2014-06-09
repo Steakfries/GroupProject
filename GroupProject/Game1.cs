@@ -28,7 +28,7 @@ namespace GroupProject
         Sprites lose = new Sprites(1280, 720, 1f);
         Sprites cursor = new Sprites(11, 19, 1f);
         Text score = new Text();    // Create Text
-        Grid Level = new Grid(10,10);
+        Grid Level = new Grid(20,11);
         AI_MainFrame[] AITest;
         Intel Intelligence = new Intel(1, 1, 1f);
 
@@ -52,8 +52,8 @@ namespace GroupProject
             graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
             wall.Position = new Vector2(400, 400);
-            player.Position = new Vector2(50, 50);
-            Intelligence.Position = new Vector2(50, 300);
+            player.Position = new Vector2(50, 100);
+            Intelligence.Position = new Vector2(50, 350);
 
         }
 
@@ -65,10 +65,17 @@ namespace GroupProject
         {
             Level.LoadGrid();
             Level.MakeSprite();
-            AITest = new AI_MainFrame[3];
-            AITest[0] = new AI_MainFrame(new Vector2(8,4), new Vector2(8,8), new Vector2(8,3), Level);
-            AITest[1] = new AI_MainFrame(new Vector2(1,4), new Vector2(5,4), new Vector2(2,4), Level);
-            AITest[2] = new AI_MainFrame(new Vector2(4, 6), new Vector2(4, 8), new Vector2(4, 7), Level);
+            AITest = new AI_MainFrame[8];
+            AITest[0] = new AI_MainFrame(new Vector2(8,5), new Vector2(8,4), new Vector2(8,9), Level);
+            AITest[1] = new AI_MainFrame(new Vector2(1,5), new Vector2(2,5), new Vector2(5,5), Level);
+            AITest[2] = new AI_MainFrame(new Vector2(4, 7), new Vector2(4, 8), new Vector2(4, 9), Level);
+
+            AITest[3] = new AI_MainFrame(new Vector2(10, 3), new Vector2(10, 2), new Vector2(10, 5), Level);
+            AITest[4] = new AI_MainFrame(new Vector2(10, 7), new Vector2(10, 6), new Vector2(10, 9), Level);
+            AITest[5] = new AI_MainFrame(new Vector2(14, 8), new Vector2(14, 7), new Vector2(14, 9), Level);
+
+            AITest[6] = new AI_MainFrame(new Vector2(14, 5), new Vector2(14, 4), new Vector2(14, 2), Level);
+            AITest[7] = new AI_MainFrame(new Vector2(18, 2), new Vector2(17, 2), new Vector2(15, 2), Level);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -85,7 +92,7 @@ namespace GroupProject
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
             player.bullet.tex = Content.Load<Texture2D>("Sprites/Gbullet");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < AITest.Length; j++)
             {
                 AITest[j].AISprite.tex = Content.Load<Texture2D>("Sprites/Rcircle");
             }
@@ -118,7 +125,7 @@ namespace GroupProject
             Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
             for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < AITest.Length; j++)
                 {
                     AITest[j].Patrol();
                     AITest[j].AISprite.Update();
@@ -192,7 +199,7 @@ namespace GroupProject
 
                 player.Draw(spriteBatch);
 
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < AITest.Length; j++)
                 {
                     if (AITest[j].AISprite.isDead == false)
                     {
@@ -226,7 +233,7 @@ namespace GroupProject
             if (GameWin)
             {
                 win.Draw(spriteBatch);
-                player.Position = new Vector2(50, 50);
+                player.Position = new Vector2(50, 100);
                 Intelligence.IsCaptured = false;
                 score.score = 0;
                 if (newState.IsKeyDown(Keys.Y))
@@ -248,7 +255,7 @@ namespace GroupProject
             if (GameLose)
             {
                 lose.Draw(spriteBatch);
-                player.Position = new Vector2(50, 50);
+                player.Position = new Vector2(50, 100);
                 Intelligence.IsCaptured = false;
                 score.score = 0;
                 if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.Y))
