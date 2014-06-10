@@ -71,10 +71,10 @@ namespace GroupProject
             AITest[2] = new AI_MainFrame(new Vector2(4, 7), new Vector2(4, 8), new Vector2(4, 9), Level);
 
             AITest[3] = new AI_MainFrame(new Vector2(10, 3), new Vector2(10, 2), new Vector2(10, 5), Level);
-            AITest[4] = new AI_MainFrame(new Vector2(10, 7), new Vector2(10, 6), new Vector2(10, 9), Level);
+            AITest[4] = new AI_MainFrame(new Vector2(12, 7), new Vector2(12, 6), new Vector2(12, 9), Level);
             AITest[5] = new AI_MainFrame(new Vector2(14, 8), new Vector2(14, 7), new Vector2(14, 9), Level);
 
-            AITest[6] = new AI_MainFrame(new Vector2(14, 5), new Vector2(14, 4), new Vector2(14, 2), Level);
+            AITest[6] = new AI_MainFrame(new Vector2(14, 5), new Vector2(14, 3), new Vector2(14, 2), Level);
             AITest[7] = new AI_MainFrame(new Vector2(18, 2), new Vector2(17, 2), new Vector2(15, 2), Level);
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -258,18 +258,18 @@ namespace GroupProject
                 player.Position = new Vector2(50, 100);
                 Intelligence.IsCaptured = false;
                 score.score = 0;
-                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.Y))
+                if (newState.IsKeyDown(Keys.Y))
                 {
                     GameLose = false;
                     GameRunning = true;
                 }
 
-                if (newState.IsKeyDown(Keys.Up) || newState.IsKeyDown(Keys.N))
+                if (newState.IsKeyDown(Keys.N))
                 {
                     GameLose = false;
                     Exit();
                 }
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < AITest.Length; i++)
                 {
                     AITest[i].AISprite.isDead = false;
                 }
