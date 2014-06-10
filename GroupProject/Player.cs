@@ -23,6 +23,7 @@ namespace GroupProject
         public Sprites bullet = new Sprites(10, 10, 1f);
         public float bulletSpeed = 1f;
         public bool isShot = false;
+        private int shots = 3;
 
         #endregion
 
@@ -59,7 +60,6 @@ namespace GroupProject
             }
             if (isDead)
             {
-                Console.Write("Dead \n");
                 isDead = false;
             }
         }
@@ -102,26 +102,29 @@ namespace GroupProject
                 Seek(a_Grid, "RIGHT");
             }
 
-            if (isShot == false)
+            if(shots > 0)
             {
-                if (newState.IsKeyDown(Keys.Up))
+                if (isShot == false)
                 {
-                    shoot("UP");
-                }
+                    if (newState.IsKeyDown(Keys.Up))
+                    {
+                        shoot("UP");
+                    }
 
-                if (newState.IsKeyDown(Keys.Down))
-                {
-                    shoot("DOWN");
-                }
+                    if (newState.IsKeyDown(Keys.Down))
+                    {
+                        shoot("DOWN");
+                    }
 
-                if (newState.IsKeyDown(Keys.Left))
-                {
-                    shoot("LEFT");
-                }
+                    if (newState.IsKeyDown(Keys.Left))
+                    {
+                        shoot("LEFT");
+                    }
 
-                if (newState.IsKeyDown(Keys.Right))
-                {
-                    shoot("RIGHT");
+                    if (newState.IsKeyDown(Keys.Right))
+                    {
+                        shoot("RIGHT");
+                    }
                 }
             }
 
@@ -184,6 +187,7 @@ namespace GroupProject
             {
                 bullet.velocity = new Vector2(0, 2);
             }
+            shots--;
         }
 
         public void ifBulletAlive()

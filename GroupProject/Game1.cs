@@ -147,6 +147,7 @@ namespace GroupProject
                         if (Collision.CheckCollision(player.bullet, AITest[j].AISprite)) // Check collision for player and wall
                         {
                             AITest[j].AISprite.isDead = true;
+                            player.isShot = false;
                         }
                         if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
                         {
