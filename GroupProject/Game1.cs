@@ -258,7 +258,7 @@ namespace GroupProject
             if (GameWin)
             {
                 win.Draw(spriteBatch);
-                player.Position = new Vector2(50, 100);
+                player.Position = new Vector2(150, 100);
 
                 for (int i = 0; i < Intelligence.Length; i++)
                 {
@@ -287,7 +287,7 @@ namespace GroupProject
             if (GameLose)
             {
                 lose.Draw(spriteBatch);
-                player.Position = new Vector2(50, 100);
+                player.Position = new Vector2(150, 100);
 
                 for (int i = 0; i < Intelligence.Length; i++)
                 {
