@@ -31,7 +31,7 @@ namespace GroupProject
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(this.font, "Intel: " + score + "/1", new Vector2(550, 0), Color.White);
+            spriteBatch.DrawString(this.font, "Intel: " + score + "/3", new Vector2(550, 0), Color.White);
         }
 
         #endregion

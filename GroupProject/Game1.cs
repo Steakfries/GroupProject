@@ -30,7 +30,7 @@ namespace GroupProject
         Text score = new Text();    // Create Text
         Grid Level = new Grid(20,11);
         AI_MainFrame[] AITest;
-        Intel Intelligence = new Intel(1, 1, 1f);
+        Intel[] Intelligence;
 
         public Game1()
         {
@@ -53,7 +53,7 @@ namespace GroupProject
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
             wall.Position = new Vector2(400, 400);
             player.Position = new Vector2(50, 100);
-            Intelligence.Position = new Vector2(50, 350);
+            //Intelligence.Position = new Vector2(50, 350);
 
         }
 
@@ -77,13 +77,26 @@ namespace GroupProject
             AITest[6] = new AI_MainFrame(new Vector2(14, 5), new Vector2(14, 3), new Vector2(14, 2), Level);
             AITest[7] = new AI_MainFrame(new Vector2(18, 2), new Vector2(17, 2), new Vector2(15, 2), Level);
 
+            Intelligence = new Intel[3];
+
+            Intelligence[0] = new Intel(1, 1, 1f);
+            Intelligence[1] = new Intel(1, 1, 1f);
+            Intelligence[2] = new Intel(1, 1, 1f);
+
+            Intelligence[0].Position = new Vector2(50, 350);
+            Intelligence[1].Position = new Vector2(900, 200);
+            Intelligence[2].Position = new Vector2(900, 400);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
 
 
-            Intelligence.tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[0].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[1].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[2].tex = Content.Load<Texture2D>("Sprites/Intel");
+
             win.tex = Content.Load<Texture2D>("Sprites/win");
             lose.tex = Content.Load<Texture2D>("Sprites/lose");
 
@@ -158,18 +171,27 @@ namespace GroupProject
                 }
             }
 
-            if (Intelligence.IsCaptured == false)
+            for (int i = 0; i < Intelligence.Length; i++)
             {
-                if (Collision.CheckCollision(player, Intelligence))
-                 {
-                    
-                    Intelligence.IsCaptured = true;                 
-                    score.score++;
-                    GameRunning = false;
-                    GameWin = true;
+                if (Intelligence[i].IsCaptured == false)
+                {
+                    if (Collision.CheckCollision(player, Intelligence[i]))
+                    {
 
-                 }
-            } 
+                        Intelligence[i].IsCaptured = true;
+                        score.score++;
+                        //GameRunning = false;
+                        //GameWin = true;
+
+                    }
+                }
+            }
+
+            if (score.score == 3)
+            {
+                GameRunning = false;
+                GameWin = true;
+            }
         }
 
         /// <summary>
@@ -191,10 +213,12 @@ namespace GroupProject
                 {
                     player.bullet.Draw(spriteBatch);
                 }
-
-                if (Intelligence.IsCaptured == false)
+                for (int i = 0; i < Intelligence.Length; i++)
                 {
-                    Intelligence.Draw(spriteBatch);
+                    if (Intelligence[i].IsCaptured == false)
+                    {
+                        Intelligence[i].Draw(spriteBatch);
+                    }
                 }
 
                 player.Draw(spriteBatch);
@@ -207,20 +231,10 @@ namespace GroupProject
                     }
                 }
 
-                //wall.Draw(spriteBatch);
-
                 for (int i = 0; i < Level.GridSprites.Length; i++)
                 {
                     Level.GridSprites[i].Draw(spriteBatch);
                 }
-
-                if (Intelligence.IsCaptured == false)
-                {
-
-                    Intelligence.Draw(spriteBatch);
-                }
-
-
 
 
             cursor.Draw(spriteBatch);
@@ -230,11 +244,17 @@ namespace GroupProject
 
                 base.Draw(gameTime);
             }
+
             if (GameWin)
             {
                 win.Draw(spriteBatch);
                 player.Position = new Vector2(50, 100);
-                Intelligence.IsCaptured = false;
+
+                for (int i = 0; i < Intelligence.Length; i++)
+                {
+                    Intelligence[i].IsCaptured = false;
+                }
+
                 score.score = 0;
                 if (newState.IsKeyDown(Keys.Y))
                 {
@@ -247,7 +267,8 @@ namespace GroupProject
                     GameLose = false;
                     Exit();
                 }
-                for (int i = 0; i < 3; i++)
+
+                for (int i = 0; i < AITest.Length; i++)
                 {
                     AITest[i].AISprite.isDead = false;
                 }
@@ -256,7 +277,12 @@ namespace GroupProject
             {
                 lose.Draw(spriteBatch);
                 player.Position = new Vector2(50, 100);
-                Intelligence.IsCaptured = false;
+
+                for (int i = 0; i < Intelligence.Length; i++)
+                {
+                    Intelligence[i].IsCaptured = false;
+                }
+
                 score.score = 0;
                 if (newState.IsKeyDown(Keys.Y))
                 {
