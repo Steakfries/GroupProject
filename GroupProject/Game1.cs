@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Audio;
 namespace GroupProject
 {
     /// <summary>
@@ -16,19 +16,22 @@ namespace GroupProject
         bool GameRunning = true;
         bool GameLose;
         bool GameWin;
+
+        private SoundEffect death;
+        private SoundEffect shoot;
+        private SoundEffect node;
+        private SoundEffect bgm;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Collision collision = new Collision();
-
         Sprites test = new Sprites(1280, 720, 1f);  // Create new Sprite/Player
-
         Player player = new Player(50, 50, 1f);
-        Sprites wall = new Sprites(50, 50, 1f);
         Sprites win = new Sprites(1280, 720, 1f);
         Sprites lose = new Sprites(1280, 720, 1f);
         Sprites cursor = new Sprites(11, 19, 1f);
         Text score = new Text();    // Create Text
-        Grid Level = new Grid(20,11);
+        Grid Level = new Grid(22,11);
         AI_MainFrame[] AITest;
         Intel[] Intelligence;
 
@@ -51,8 +54,8 @@ namespace GroupProject
             base.Initialize();
             graphics.PreferredBackBufferWidth = 1280;   // Set Screen X
             graphics.PreferredBackBufferHeight = 720;   // Set Screen Y
-            wall.Position = new Vector2(400, 400);
-            player.Position = new Vector2(50, 100);
+            player.Position = new Vector2(150, 100);
+            
             //Intelligence.Position = new Vector2(50, 350);
 
         }
@@ -66,16 +69,16 @@ namespace GroupProject
             Level.LoadGrid();
             Level.MakeSprite();
             AITest = new AI_MainFrame[8];
-            AITest[0] = new AI_MainFrame(new Vector2(8,5), new Vector2(8,4), new Vector2(8,9), Level);
-            AITest[1] = new AI_MainFrame(new Vector2(1,5), new Vector2(2,5), new Vector2(5,5), Level);
-            AITest[2] = new AI_MainFrame(new Vector2(4, 7), new Vector2(4, 8), new Vector2(4, 9), Level);
+            AITest[0] = new AI_MainFrame(new Vector2(10,5), new Vector2(10,4), new Vector2(10,9), Level);
+            AITest[1] = new AI_MainFrame(new Vector2(3,5), new Vector2(4,5), new Vector2(7,5), Level);
+            AITest[2] = new AI_MainFrame(new Vector2(6, 7), new Vector2(6, 8), new Vector2(6, 9), Level);
 
-            AITest[3] = new AI_MainFrame(new Vector2(10, 3), new Vector2(10, 2), new Vector2(10, 5), Level);
-            AITest[4] = new AI_MainFrame(new Vector2(12, 7), new Vector2(12, 6), new Vector2(12, 9), Level);
-            AITest[5] = new AI_MainFrame(new Vector2(14, 8), new Vector2(14, 7), new Vector2(14, 9), Level);
+            AITest[3] = new AI_MainFrame(new Vector2(12, 3), new Vector2(12, 2), new Vector2(12, 5), Level);
+            AITest[4] = new AI_MainFrame(new Vector2(14, 7), new Vector2(14, 6), new Vector2(14, 9), Level);
+            AITest[5] = new AI_MainFrame(new Vector2(16, 8), new Vector2(16, 7), new Vector2(16, 9), Level);
 
-            AITest[6] = new AI_MainFrame(new Vector2(14, 5), new Vector2(14, 3), new Vector2(14, 2), Level);
-            AITest[7] = new AI_MainFrame(new Vector2(18, 2), new Vector2(17, 2), new Vector2(15, 2), Level);
+            AITest[6] = new AI_MainFrame(new Vector2(16, 5), new Vector2(16, 3), new Vector2(16, 2), Level);
+            AITest[7] = new AI_MainFrame(new Vector2(20, 2), new Vector2(19, 2), new Vector2(17, 2), Level);
 
             Intelligence = new Intel[3];
 
@@ -83,9 +86,9 @@ namespace GroupProject
             Intelligence[1] = new Intel(1, 1, 1f);
             Intelligence[2] = new Intel(1, 1, 1f);
 
-            Intelligence[0].Position = new Vector2(50, 350);
-            Intelligence[1].Position = new Vector2(900, 200);
-            Intelligence[2].Position = new Vector2(900, 400);
+            Intelligence[0].Position = new Vector2(150, 350);
+            Intelligence[1].Position = new Vector2(1000, 200);
+            Intelligence[2].Position = new Vector2(1000, 400);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -99,12 +102,18 @@ namespace GroupProject
 
             win.tex = Content.Load<Texture2D>("Sprites/win");
             lose.tex = Content.Load<Texture2D>("Sprites/lose");
-
-            wall.tex = Content.Load<Texture2D>("Sprites/Wsquare");
             cursor.tex = Content.Load<Texture2D>("Sprites/cursor");
             player.tex = Content.Load<Texture2D>("Sprites/Gcircle");
             player.bullet.tex = Content.Load<Texture2D>("Sprites/Gbullet");
             score.font = Content.Load<SpriteFont>("Fonts/Score"); // Use the name of your sprite font file here instead of 'Score'.
+            
+            bgm = Content.Load<SoundEffect>("Sounds/bgm");
+            SoundEffectInstance soundEffectInstance = bgm.CreateInstance();
+            soundEffectInstance.IsLooped = true;
+            death = Content.Load<SoundEffect>("Sounds/die");
+            shoot = Content.Load<SoundEffect>("Sounds/gun");
+            node = Content.Load<SoundEffect>("Sounds/node");
+
             for (int j = 0; j < AITest.Length; j++)
             {
                 AITest[j].AISprite.tex = Content.Load<Texture2D>("Sprites/Rcircle");
@@ -113,6 +122,7 @@ namespace GroupProject
             {
                 Level.GridSprites[i].tex = Content.Load<Texture2D>("Sprites/Wsquare");
             }
+            soundEffectInstance.Play();
         }
 
         /// <summary>
@@ -151,6 +161,7 @@ namespace GroupProject
                         }
                         if (Collision.CheckCollision(player, AITest[j].AISprite)) // Check collision for player and wall
                         {
+                            death.Play();
                             GameRunning = false;
                             GameLose = true;
                         }
@@ -158,7 +169,7 @@ namespace GroupProject
                 }
             }
 
-            player.Update(Level);
+            player.Update(Level, shoot);
             cursor.Position = new Vector2(player.MouseX, player.MouseY);
             for (int i = 0; i < Level.GridSprites.Length; i++)
             {
@@ -178,11 +189,9 @@ namespace GroupProject
                 {
                     if (Collision.CheckCollision(player, Intelligence[i]))
                     {
-
+                        node.Play();
                         Intelligence[i].IsCaptured = true;
                         score.score++;
-                        //GameRunning = false;
-                        //GameWin = true;
 
                     }
                 }
@@ -241,7 +250,7 @@ namespace GroupProject
             cursor.Draw(spriteBatch);
 
 
-                score.Draw(spriteBatch);
+                score.Draw(spriteBatch, player.shots);
 
                 base.Draw(gameTime);
             }
@@ -261,6 +270,7 @@ namespace GroupProject
                 {
                     GameWin = false;
                     GameRunning = true;
+                    player.shots = 3;
                 }
 
                 if (newState.IsKeyDown(Keys.N))
@@ -289,6 +299,7 @@ namespace GroupProject
                 {
                     GameLose = false;
                     GameRunning = true;
+                    player.shots = 3;
                 }
 
                 if (newState.IsKeyDown(Keys.N))

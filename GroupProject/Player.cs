@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GroupProject
 {
@@ -23,7 +24,8 @@ namespace GroupProject
         public Sprites bullet = new Sprites(10, 10, 1f);
         public float bulletSpeed = 1f;
         public bool isShot = false;
-        private int shots = 3;
+        public int shots = 3;
+        private int delay = 50;
 
         #endregion
 
@@ -42,9 +44,9 @@ namespace GroupProject
             this.Position += this.velocity;
         }
 
-        public void Update(Grid a_Grid)
+        public void Update(Grid a_Grid, SoundEffect shoots)
         {
-            CheckInput(a_Grid);
+            CheckInput(a_Grid, shoots);
             CheckMouse();
             this.UpdatePosition();
             this.bullet.Update();
@@ -68,7 +70,7 @@ namespace GroupProject
 
         #region Input
 
-        public void CheckInput(Grid a_Grid)    // Check for user input
+        public void CheckInput(Grid a_Grid, SoundEffect shoots)    // Check for user input
         {
             KeyboardState newState = Keyboard.GetState();  // Check for keyboard input
 
@@ -106,25 +108,37 @@ namespace GroupProject
             {
                 if (isShot == false)
                 {
-                    if (newState.IsKeyDown(Keys.Up))
+                    if (newState.IsKeyDown(Keys.Up) && delay == 50)
                     {
                         shoot("UP");
+                        shoots.Play();
+                        delay = 0;
                     }
 
-                    if (newState.IsKeyDown(Keys.Down))
+                    if (newState.IsKeyDown(Keys.Down) && delay == 50)
                     {
                         shoot("DOWN");
+                        shoots.Play();
+                        delay = 0;
                     }
 
-                    if (newState.IsKeyDown(Keys.Left))
+                    if (newState.IsKeyDown(Keys.Left) && delay == 50)
                     {
                         shoot("LEFT");
+                        shoots.Play();
+                        delay = 0;
                     }
 
-                    if (newState.IsKeyDown(Keys.Right))
+                    if (newState.IsKeyDown(Keys.Right) && delay == 50)
                     {
                         shoot("RIGHT");
+                        shoots.Play();
+                        delay = 0;
                     }
+                }
+                if (delay < 50)
+                {
+                    delay = delay + 1;
                 }
             }
 

@@ -51,6 +51,30 @@
     <Folder Include="Backgrounds\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sounds\bgm.wav">
+      <Name>bgm</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Sounds\die.wav">
+      <Name>die</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Sounds\gun.wav">
+      <Name>gun</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Sounds\node.wav">
+      <Name>node</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Content Include="Sprites\back.png">
       <Name>back</Name>
       <Importer>TextureImporter</Importer>
