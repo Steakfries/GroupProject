@@ -81,7 +81,7 @@ namespace GroupProject
 
             ReloadGridSprites();
             
-            AITest = new AI_MainFrame[3,10];
+            AITest = new AI_MainFrame[3,12];
             AITest[0,0] = new AI_MainFrame(new Vector2(10, 5), new Vector2(10 ,4), new Vector2(10, 9), Level);
             AITest[0,1] = new AI_MainFrame(new Vector2(3, 5), new Vector2(4, 5), new Vector2(7, 5), Level);
             AITest[0,2] = new AI_MainFrame(new Vector2(6, 7), new Vector2(6, 8), new Vector2(6, 9), Level);
@@ -108,6 +108,23 @@ namespace GroupProject
             AITest[1, 8] = new AI_MainFrame(new Vector2(17, 4), new Vector2(17, 3), new Vector2(19, 4), Level);
 
 
+            AITest[2, 0] = new AI_MainFrame(new Vector2(3, 3), new Vector2(4, 3), new Vector2(6, 3), Level);
+            AITest[2, 1] = new AI_MainFrame(new Vector2(4, 2), new Vector2(5, 2), new Vector2(10, 2), Level);
+            AITest[2, 2] = new AI_MainFrame(new Vector2(8, 3), new Vector2(9, 3), new Vector2(12, 3), Level);
+
+            AITest[2, 3] = new AI_MainFrame(new Vector2(15, 2), new Vector2(15, 3), new Vector2(15, 5), Level);
+            AITest[2, 4] = new AI_MainFrame(new Vector2(17, 5), new Vector2(17, 4), new Vector2(17, 2), Level);
+            AITest[2, 5] = new AI_MainFrame(new Vector2(19, 2), new Vector2(19, 3), new Vector2(19, 5), Level);
+
+            AITest[2, 6] = new AI_MainFrame(new Vector2(5, 6), new Vector2(6, 6), new Vector2(8, 6), Level);
+            AITest[2, 7] = new AI_MainFrame(new Vector2(3, 7), new Vector2(3, 8), new Vector2(7, 7), Level);
+
+            AITest[2, 8] = new AI_MainFrame(new Vector2(11, 7), new Vector2(10, 7), new Vector2(11, 9), Level);
+            AITest[2, 9] = new AI_MainFrame(new Vector2(13, 9), new Vector2(12, 9), new Vector2(13, 7), Level);
+            AITest[2, 10] = new AI_MainFrame(new Vector2(15, 9), new Vector2(15, 8), new Vector2(15, 7), Level);
+            AITest[2, 11] = new AI_MainFrame(new Vector2(19, 7), new Vector2(18, 7), new Vector2(19, 9), Level);
+
+
             Intelligence = new Intel[3,5];
 
             Intelligence[0,0] = new Intel(1, 1, 1f);
@@ -129,6 +146,19 @@ namespace GroupProject
             Intelligence[1, 2].Position = new Vector2(1000, 200);
             Intelligence[1, 3].Position = new Vector2(1000, 450);
 
+
+            Intelligence[2, 0] = new Intel(1, 1, 1f);
+            Intelligence[2, 1] = new Intel(1, 1, 1f);
+            Intelligence[2, 2] = new Intel(1, 1, 1f);
+            Intelligence[2, 3] = new Intel(1, 1, 1f);
+            Intelligence[2, 4] = new Intel(1, 1, 1f);
+
+            Intelligence[2, 0].Position = new Vector2(150, 100);
+            Intelligence[2, 1].Position = new Vector2(200, 250);
+            Intelligence[2, 2].Position = new Vector2(450, 250);
+            Intelligence[2, 3].Position = new Vector2(1000, 100);
+            Intelligence[2, 4].Position = new Vector2(1000, 350);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -142,6 +172,12 @@ namespace GroupProject
             Intelligence[1, 1].tex = Content.Load<Texture2D>("Sprites/Intel");
             Intelligence[1, 2].tex = Content.Load<Texture2D>("Sprites/Intel");
             Intelligence[1, 3].tex = Content.Load<Texture2D>("Sprites/Intel");
+
+            Intelligence[2, 0].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[2, 1].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[2, 2].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[2, 3].tex = Content.Load<Texture2D>("Sprites/Intel");
+            Intelligence[2, 4].tex = Content.Load<Texture2D>("Sprites/Intel");
 
             win.tex = Content.Load<Texture2D>("Sprites/win");
             lose.tex = Content.Load<Texture2D>("Sprites/lose");
@@ -159,7 +195,7 @@ namespace GroupProject
 
             for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 12; j++)
                 {
                     if (AITest[i, j] != null)
                     {
@@ -192,7 +228,7 @@ namespace GroupProject
             base.Update(gameTime);
 
             Vector2 oldPos = new Vector2(player.Position.X, player.Position.Y); // Position for the player
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 12; j++)
                 {
                     if (AITest[Lvl, j] != null)
                     {
@@ -285,7 +321,7 @@ namespace GroupProject
 
                 player.Draw(spriteBatch);
 
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 12; j++)
                 {
                     if (AITest[Lvl, j] != null)
                     {
@@ -350,7 +386,7 @@ namespace GroupProject
                     Exit();
                 }
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 12; i++)
                 {
                     if (AITest[Lvl, i] != null)
                     {
@@ -385,7 +421,7 @@ namespace GroupProject
                     GameLose = false;
                     Exit();
                 }
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 12; i++)
                 {
                     if (AITest[Lvl, i] != null)
                     {

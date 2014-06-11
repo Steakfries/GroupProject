@@ -318,7 +318,6 @@ namespace GroupProject
                 Matrix[5, 1] = true;
                 Matrix[5, 4] = true;
                 Matrix[5, 5] = true;
-                Matrix[5, 7] = true;
                 Matrix[5, 8] = true;
                 Matrix[5, 10] = true;
                 Matrix[6, 1] = true;
@@ -385,8 +384,8 @@ namespace GroupProject
                 Matrix[19, 6] = true;
                 Matrix[19, 10] = true;
                 Matrix[20, 1] = true;
-                Matrix[20, 2] = true;
                 Matrix[20, 3] = true;
+                Matrix[20, 4] = true;
                 Matrix[20, 8] = true;
                 Matrix[20, 9] = true;
                 Matrix[20, 10] = true;
