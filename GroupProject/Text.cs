@@ -29,9 +29,9 @@ namespace GroupProject
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, int shots)
+        public void Draw(SpriteBatch spriteBatch, int shots, int level)
         {
-            spriteBatch.DrawString(this.font, "Intel: " + score + "/3 \n" + "Shots: " + shots, new Vector2(550, 0), Color.White);
+            spriteBatch.DrawString(this.font, "Intel: " + score + "/" + (3 + level) + "\n" + "Shots: " + shots, new Vector2(550, 0), Color.White);
         }
 
         #endregion

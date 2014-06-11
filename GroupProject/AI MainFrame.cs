@@ -19,6 +19,8 @@ namespace GroupProject
 
             CurrentNode = 1;
 
+            m_Target = a_PatrolEnd;
+
             MovementNodes.AddFirst(a_PatrolStart * 50);
             MovementNodes.AddLast(AISprite.Position);
 
@@ -32,7 +34,26 @@ namespace GroupProject
 
         Vector2 m_CurrentPlace;
 
+        Vector2 m_Target;
+
         LinkedList<Vector2> MovementNodes; //the path the AI will folow
+
+        public void ResetPath(Grid a_Grid)
+        {
+            Vector2[] Holder = new Vector2[2];
+
+            Holder[0] = MovementNodes.ElementAt(0);
+            Holder[1] = MovementNodes.ElementAt(1);
+
+            AISprite.Position = MovementNodes.ElementAt(1);
+
+            MovementNodes.Clear();
+
+            MovementNodes.AddFirst(Holder[0]);
+            MovementNodes.AddLast(Holder[1]);
+
+            PathFinding(m_Target, a_Grid);
+        }
 
         private void PathFinding(Vector2 a_Target, Grid a_Grid) //find path function
         {
@@ -121,19 +142,19 @@ namespace GroupProject
             {
                 if (MovementNodes.ElementAt(CurrentNode).X < AISprite.Position.X)
                 {
-                    AISprite.velocity = new Vector2(-1, 0);
+                    AISprite.velocity = new Vector2(-2, 0);
                 }
                 if (MovementNodes.ElementAt(CurrentNode).X > AISprite.Position.X)
                 {
-                    AISprite.velocity = new Vector2(1, 0);
+                    AISprite.velocity = new Vector2(2, 0);
                 }
                 if (MovementNodes.ElementAt(CurrentNode).Y < AISprite.Position.Y)
                 {
-                    AISprite.velocity = new Vector2(0, -1);
+                    AISprite.velocity = new Vector2(0, -2);
                 }
                 if (MovementNodes.ElementAt(CurrentNode).Y > AISprite.Position.Y)
                 {
-                    AISprite.velocity = new Vector2(0, 1);
+                    AISprite.velocity = new Vector2(0, 2);
                 }
             }
 
