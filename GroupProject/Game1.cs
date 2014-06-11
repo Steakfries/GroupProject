@@ -17,7 +17,7 @@ namespace GroupProject
         bool GameLose;
         bool GameWin;
 
-        int Lvl = 1;
+        int Lvl = 0;
 
         private SoundEffect death;
         private SoundEffect shoot;
@@ -351,7 +351,10 @@ namespace GroupProject
                 win.Draw(spriteBatch);
                 player.Position = new Vector2(150, 100);
 
-                
+                 if (Lvl == 2)
+                    {
+                        player.Position = new Vector2(550, 250);
+                    }
 
                 for (int i = 0; i < 5; i++)
                 {
@@ -376,6 +379,7 @@ namespace GroupProject
                     if (Lvl == 3)
                     {
                         Lvl = 0;
+                        player.Position = new Vector2(150, 100);
                     }
                     ReloadGridSprites();
                 }
@@ -399,7 +403,7 @@ namespace GroupProject
             {
                 lose.Draw(spriteBatch);
                 player.Position = new Vector2(150, 100);
-
+                             
                 for (int i = 0; i < 5; i++)
                 {
                     if (Intelligence[Lvl, i] != null)
@@ -407,13 +411,15 @@ namespace GroupProject
                         Intelligence[Lvl, i].IsCaptured = false;
                     }
                 }
-
+                Lvl = 0;
                 score.score = 0;
                 if (newState.IsKeyDown(Keys.Y))
                 {
                     GameLose = false;
                     GameRunning = true;
                     player.shots = 3;
+                    ReloadGridSprites();
+
                 }
 
                 if (newState.IsKeyDown(Keys.N))
